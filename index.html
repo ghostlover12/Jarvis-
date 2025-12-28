@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movielink BD - Compact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --card-bg: #1a1a1a;
+            --accent: #e50914; 
+            --text: #e0e0e0;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            background: rgba(13, 13, 13, 0.95);
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { font-size: 24px; font-weight: bold; color: var(--accent); text-transform: uppercase; }
+        
+        /* ছোট সার্চ বার */
+        .search-box input {
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: #222;
+            border: 1px solid #333;
+            color: white;
+            outline: none;
+            width: 200px;
+        }
+
+        .filters { text-align: center; margin: 20px 0; }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #444;
+            color: #aaa;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            margin: 0 5px;
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+        /* 🔥 মেইন গ্রিড এবং ছোট বক্স ডিজাইন 🔥 */
+        .container {
+            max-width: 1000px; /* কন্টেইনার সাইজ কমানো হয়েছে */
+            margin: 0 auto;
+            padding: 0 20px 50px 20px;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* ফিক্সড ৩ কলাম */
+            gap: 20px; /* গ্যাপ কমানো হয়েছে */
+        }
+
+        .movie-card {
+            background: var(--card-bg);
+            border-radius: 10px; /* রাউন্ডনেস কমানো হয়েছে */
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.2);
+        }
+
+        /* পোস্টারের হাইট কমানো হয়েছে (Small Size) */
+        .poster-wrapper {
+            position: relative;
+            height: 240px; /* আগে ছিল 350px */
+            overflow: hidden;
+        }
+        .poster-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+        .movie-card:hover .poster-wrapper img { transform: scale(1.08); filter: brightness(0.7); }
+
+        .quality {
+            position: absolute;
+            top: 10px; left: 10px;
+            background: var(--accent); color: white;
+            padding: 2px 6px; border-radius: 3px;
+            font-size: 10px; font-weight: bold;
+        }
+
+        /* ইনফো বক্স ছোট করা হয়েছে */
+        .info-box {
+            padding: 12px; /* প্যাডিং কমানো হয়েছে */
+            text-align: left;
+        }
+        .movie-title {
+            font-size: 15px; /* ফন্ট ছোট */
+            font-weight: 600;
+            margin-bottom: 5px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            color: #fff;
+        }
+        .movie-meta {
+            font-size: 11px; /* মেটা ডাটা ছোট */
+            color: #888;
+            display: flex; justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .download-btn {
+            display: block; width: 100%; text-align: center;
+            background: #222; color: white;
+            padding: 8px 0; /* বাটন ছোট */
+            border-radius: 5px;
+            font-size: 12px; font-weight: bold;
+            border: 1px solid #333; transition: 0.2s;
+        }
+        .movie-card:hover .download-btn { background: var(--accent); border-color: var(--accent); }
+
+        /* রেসপনসিভ (মোবাইল) */
+        @media (max-width: 768px) {
+            .movie-grid { grid-template-columns: repeat(2, 1fr); } /* ট্যাবলেটে ২টা */
+        }
+        @media (max-width: 480px) {
+            .movie-grid { grid-template-columns: repeat(1, 1fr); } /* মোবাইলে ১টা */
+        }
+        
+        a { text-decoration: none; color: inherit; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">MovieLink<span style="color:white; font-size:18px;">BD</span></div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchFunction()">
+        </div>
+    </nav>
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterMovies('all')">All</button>
+        <button class="filter-btn" onclick="filterMovies('bollywood')">Bollywood</button>
+        <button class="filter-btn" onclick="filterMovies('hollywood')">Hollywood</button>
+    </div>
+
+    <div class="container">
+        <div class="movie-grid" id="movieGrid">
+
+            <div class="movie-card bollywood">
+                <a href="jawan.html">
+                    <div class="poster-wrapper">
+                        <span class="quality">HD</span>
+                        <img src="https://image.tmdb.org/t/p/w500/jJw4vV2r22z3a7d2.jpg" alt="Jawan">
+                    </div>
+                    <div class="info-box">
+                        <div class="movie-title">Jawan</div>
+                        <div class="movie-meta"><span>2023</span><span>Action</span></div>
+                        <div class="download-btn">Download</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="movie-card bollywood">
+                <a href="animal.html">
+                    <div class="poster-wrapper">
+                        <span class="quality">4K</span>
+                        <img src="https://image.tmdb.org/t/p/w500/hr9rjR3J0xBBK9O4O05rWAlDdsO.jpg" alt="Animal">
+                    </div>
+                    <div class="info-box">
+                        <div class="movie-title">Animal</div>
+                        <div class="movie-meta"><span>2023</span><span>Drama</span></div>
+                        <div class="download-btn">Download</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="movie-card hollywood">
+                <a href="#">
+                    <div class="poster-wrapper">
+                        <span class="quality">FHD</span>
+                        <img src="https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg" alt="Avatar 2">
+                    </div>
+                    <div class="info-box">
+                        <div class="movie-title">Avatar: Way of Water</div>
+                        <div class="movie-meta"><span>2022</span><span>Sci-Fi</span></div>
+                        <div class="download-btn">Download</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="movie-card south">
+                <a href="#">
+                    <div class="poster-wrapper">
+                        <span class="quality">WEB</span>
+                        <img src="https://image.tmdb.org/t/p/w500/mBaXZ95R2OxueZhvQbcEWy2DqyO.jpg" alt="Salaar">
+                    </div>
+                    <div class="info-box">
+                        <div class="movie-title">Salaar</div>
+                        <div class="movie-meta"><span>2023</span><span>Action</span></div>
+                        <div class="download-btn">Download</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="movie-card south">
+                <a href="#">
+                    <div class="poster-wrapper">
+                        <span class="quality">HD</span>
+                        <img src="https://image.tmdb.org/t/p/w500/pD6sL4vntUOXHmuvJPPZAgvyfd9.jpg" alt="Leo">
+                    </div>
+                    <div class="info-box">
+                        <div class="movie-title">Leo</div>
+                        <div class="movie-meta"><span>2023</span><span>Thriller</span></div>
+                        <div class="download-btn">Download</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="movie-card bollywood">
+                <a href="#">
+                    <div class="poster-wrapper">
+                        <span class="quality">CAM</span>
+                        <img src="https://image.tmdb.org/t/p/w500/dZ25AzB5n4f35wKq7a5x5J3.jpg" alt="Dunki">
+                    </div>
+                    <div class="info-box">
+                        <div class="movie-title">Dunki</div>
+                        <div class="movie-meta"><span>2023</span><span>Comedy</span></div>
+                        <div class="download-btn">Download</div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function searchFunction() {
+            let input = document.getElementById('searchInput').value.toUpperCase();
+            let cards = document.getElementsByClassName('movie-card');
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].querySelector(".movie-title");
+                if (title.innerText.toUpperCase().indexOf(input) > -1) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+        function filterMovies(category) {
+            let cards = document.getElementsByClassName('movie-card');
+            let btns = document.getElementsByClassName('filter-btn');
+            for (let btn of btns) {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase().includes(category)) btn.classList.add('active');
+            }
+            if (category === "all") category = "";
+            for (let i = 0; i < cards.length; i++) {
+                if (cards[i].className.indexOf(category) > -1) cards[i].style.display = "block";
+                else cards[i].style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
