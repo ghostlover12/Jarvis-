@@ -157,6 +157,105 @@
     </nav>
 
     
+<div class="movie-card" onclick="open_25862()">
+    <div class="poster-wrap">
+        <img src="https://image.tmdb.org/t/p/w342/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg" alt="The Avengers">
+        <span class="badge-pin">PINNED</span>
+        <span class="badge-qual">WEB-DL</span>
+        <div class="view-cnt">👁 50K</div>
+        <div class="bot-bar">
+            <span class="dual-aud">DUAL [HINDI-ENG]</span>
+            <span class="type-mv">MOVIE</span>
+        </div>
+    </div>
+    <div class="card-det">
+        <div class="ago">Just Now</div>
+        <h3 class="title">The Avengers (2012)</h3>
+    </div>
+</div>
+
+<script>
+    function open_25862() {
+        var win = window.open("", "_blank");
+        win.document.write(`
+            <html>
+            <head>
+                <title>The Avengers - Download</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    body { background: #0f1014; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
+                    .banner { position: relative; height: 350px; background: url(https://image.tmdb.org/t/p/w780/9BBTo63ANSmhC4e6r62OJFuK2GL.jpg) center/cover no-repeat; }
+                    .banner::after { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to bottom, transparent, #0f1014); }
+                    .container { padding: 20px; max-width: 800px; margin: -80px auto 0; position: relative; z-index: 10; }
+                    .poster-area { display: flex; gap: 20px; align-items: flex-end; }
+                    .main-poster { width: 140px; border-radius: 10px; border: 3px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+                    h1 { margin: 10px 0 5px; font-size: 28px; text-shadow: 0 2px 5px #000; }
+                    .meta { color: #ccc; font-size: 14px; margin-bottom: 20px; }
+                    .stats { display: flex; gap: 15px; margin: 20px 0; background: #1a1c24; padding: 15px; border-radius: 8px; }
+                    .stat-box { flex: 1; text-align: center; }
+                    .stat-val { font-weight: bold; font-size: 18px; color: #fff; }
+                    .stat-label { font-size: 12px; color: #888; }
+                    .cast-sec { margin: 20px 0; font-size: 14px; color: #bbb; }
+                    .plot { background: #1a1c24; padding: 15px; border-radius: 8px; line-height: 1.6; color: #ccc; border-left: 3px solid #e50914; }
+                    .btn-area { margin-top: 30px; display: grid; gap: 10px; }
+                    .dl-btn { padding: 15px; text-align: center; text-decoration: none; color: #fff; border-radius: 8px; font-weight: bold; transition: 0.3s; }
+                    .btn-480 { background: #333; }
+                    .btn-720 { background: linear-gradient(90deg, #e50914, #ff5e62); box-shadow: 0 5px 15px rgba(229,9,20,0.3); }
+                    .btn-1080 { background: #222; border: 1px solid #444; }
+                    .dl-btn:hover { transform: translateY(-2px); }
+                </style>
+            </head>
+            <body>
+                <div class="banner"></div>
+                <div class="container">
+                    <div class="poster-area">
+                        <img src="https://image.tmdb.org/t/p/w342/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg" class="main-poster">
+                        <div>
+                            <h1>The Avengers</h1>
+                            <div class="meta">2012 • Science Fiction • Action • Adventure</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-box"><div class="stat-val">⭐ 7.9</div><div class="stat-label">TMDB RATING</div></div>
+                        <div class="stat-box"><div class="stat-val">📅 2012</div><div class="stat-label">RELEASED</div></div>
+                    </div>
+
+                    <div class="cast-sec"><strong>🎭 Starring:</strong> Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth</div>
+                    <div class="plot">When an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!</div>
+
+                    <h3 style="margin-top: 30px; color: #e50914;">⚡ Direct Download Links</h3>
+                    <div class="btn-area">
+                        <a href="#" class="dl-btn btn-480">Download 480p (SD)</a>
+                        <a href="#" class="dl-btn btn-720">🚀 Download 720p (HD)</a>
+                        <a href="#" class="dl-btn btn-1080">Download 1080p (FHD)</a>
+                    </div>
+                    <br><center><small style="color:#555">Powered by DarkGen</small></center>
+                </div>
+            </body>
+            </html>
+        `);
+    }
+</script>
+
+<style>
+    .movie-card { width: 170px; background: #161616; border-radius: 8px; overflow: hidden; cursor: pointer; transition: 0.3s; border: 1px solid #222; margin: 10px; display: inline-block; vertical-align: top; }
+    .movie-card:hover { transform: translateY(-5px); border-color: #e50914; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+    .poster-wrap { position: relative; height: 240px; }
+    .poster-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .badge-pin { position: absolute; top: 8px; left: 8px; background: #ffd700; color: #000; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 2px; }
+    .badge-qual { position: absolute; top: 8px; right: 8px; background: #0056b3; color: #fff; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 2px; }
+    .view-cnt { position: absolute; bottom: 28px; right: 8px; color: #fff; font-size: 10px; text-shadow: 1px 1px 2px #000; }
+    .bot-bar { position: absolute; bottom: 0; width: 100%; display: flex; font-size: 10px; font-weight: bold; }
+    .dual-aud { background: #008000; color: white; padding: 5px; flex: 1; text-align: center; }
+    .type-mv { background: #e50914; color: white; padding: 5px; width: 40px; text-align: center; }
+    .card-det { padding: 10px; text-align: center; color: #fff; font-family: sans-serif; }
+    .title { font-size: 13px; margin: 5px 0 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ago { font-size: 10px; color: #888; }
+</style>
+
+
+    
 <div style="font-family: 'Segoe UI', sans-serif; background: #0f1014; border-radius: 16px; overflow: hidden; margin-bottom: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-width: 100%; border: 1px solid #1f2229;">
     
     <details style="transition: 0.3s;">
